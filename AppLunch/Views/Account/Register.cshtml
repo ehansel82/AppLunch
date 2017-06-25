@@ -1,0 +1,21 @@
+﻿@model AppLunch.Models.RegistrationModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+
+<hr/>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+{
+    @Html.LabelFor(x => x.UserName);
+    @Html.TextBoxFor(x => x.UserName);
+
+    @Html.LabelFor(x => x.Password);
+    @Html.TextBoxFor(x => x.Password);
+
+    <input class="btn" type="submit" value="Register" />
+}
+
