@@ -50,5 +50,6 @@ Ankh.NoLoad
 !/packages/*/lib/*.dll
 !/packages/*/lib/*/*.dll
 
-#Connections
+#Connections/Settings
 connections.config
+appSettings.config
