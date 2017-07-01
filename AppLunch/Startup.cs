@@ -21,13 +21,21 @@ namespace AppLunch
             app.CreatePerOwinContext<UserStore<IdentityUser>>((opt, cont) =>
                new UserStore<IdentityUser>(cont.Get<IdentityDbContext>()));
 
+            app.CreatePerOwinContext<RoleStore<IdentityRole>>((opt, cont) =>
+                new RoleStore<IdentityRole>(cont.Get<IdentityDbContext>()));
+
             app.CreatePerOwinContext<UserManager<IdentityUser>>(
-            (opt, cont) => 
+            (opt, cont) =>
             {
                 var userManager = new UserManager<IdentityUser>(cont.Get<UserStore<IdentityUser>>());
                 userManager.UserTokenProvider = new DataProtectorTokenProvider<IdentityUser>(opt.DataProtectionProvider.Create());
                 userManager.EmailService = new EmailService();
                 return userManager;
+            });
+
+            app.CreatePerOwinContext<RoleManager<IdentityRole>>((opt, cont) =>
+            {
+                return new RoleManager<IdentityRole>(cont.Get<RoleStore<IdentityRole>>());
             });
 
             app.CreatePerOwinContext<SignInManager<IdentityUser, string>>((opt, cont) =>

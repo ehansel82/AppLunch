@@ -1,4 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using System.Web;
+using System.Web.Mvc;
 
 namespace AppLunch.Filters
 {
@@ -10,6 +14,10 @@ namespace AppLunch.Filters
             {
                 filterContext.Controller.ViewBag.LoggedInUserName = filterContext.HttpContext.User.Identity.Name;
             }
+
+            var userManager = filterContext.HttpContext.GetOwinContext().Get<UserManager<IdentityUser>>();
+
+            var roles = userManager.GetRoles(filterContext.HttpContext.User.Identity.GetUserId());
         }
     }
 }
