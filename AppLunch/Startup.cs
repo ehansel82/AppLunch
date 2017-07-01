@@ -35,7 +35,8 @@ namespace AppLunch
 
             app.UseCookieAuthentication(new Microsoft.Owin.Security.Cookies.CookieAuthenticationOptions()
             {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                LoginPath = new PathString("/Account/Login")
             });
         }
     }

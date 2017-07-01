@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Resend Email Confirmation";
+}
+
+<h2>Resend confirm account email?</h2>
+
+@using (Html.BeginForm("ResendEmailConfirmation", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken();
+
+    <div>Click the button to resend an email to confirm your account.</div>
+    @Html.Hidden("userID", (string)ViewBag.UserID);
+    <div>
+        <input type="submit" class="btn" name="ResendEmail" value="Resend Email" />
+    </div>
+}
+

@@ -19,6 +19,12 @@
                 </button>
                 @Html.ActionLink("Lunch Generator", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+            @if (ViewBag.LoggedInUserName != null)
+            {
+            <div class="navbar-right">
+                <span>Logged In: @ViewBag.LoggedInUserName</span>
+            </div>
+            }
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                 </ul>

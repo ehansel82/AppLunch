@@ -34,7 +34,7 @@ namespace AppLunch.Controllers
                 {
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var confirmUrl = Url.Action("ConfirmEmail", "Account", new { userid = user.Id, token = token }, Request.Url.Scheme);
-                    await _userManager.SendEmailAsync(user.Id, "Lunch Generator App Email Confirmation", $"Use this link to confirm your email {confirmUrl}.");
+                    await _userManager.SendEmailAsync(user.Id, "Lunch Generator App Email Confirmation", $"Click <a href='{confirmUrl}'>here</a> to confirm your email.");
                     return RedirectToAction("Login", new { isRegistrationRedirect = true });
                 }
                 else
@@ -53,14 +53,39 @@ namespace AppLunch.Controllers
             {
                 return View("Error");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
+        }
+
+        [HttpGet]
+        public ActionResult ResendEmailConfirmation(string userID)
+        {
+            ViewBag.UserID = userID;
+            return View();
+        }
+
+        [HttpPost]
+        [ActionName("ResendEmailConfirmation")]
+        [ValidateAntiForgeryToken()]
+        public async Task<ActionResult> ResendEmailConfirmation_Post(string userID)
+        {
+            var user = await _userManager.FindByIdAsync(userID);
+
+            if (user != null)
+            {
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                var confirmUrl = Url.Action("ConfirmEmail", "Account", new { userid = user.Id, token = token }, Request.Url.Scheme);
+                await _userManager.SendEmailAsync(user.Id, "Lunch Generator App Email Confirmation", $"Click <a href='{confirmUrl}'>here</a> to confirm your email.");
+                return RedirectToAction("Login", new { isRegistrationRedirect = true });
+            }
+
+            return View();
         }
 
         [HttpGet]
         public ActionResult Login(bool? isRegistrationRedirect)
         {
-            ViewBag.isRegistrationRedirect = isRegistrationRedirect ?? false;
-            return View();
+            var vm = new LoginModel() { isRegistrationRedirect = isRegistrationRedirect ?? false };
+            return View(vm);
         }
 
         [HttpPost]
@@ -68,6 +93,15 @@ namespace AppLunch.Controllers
         public async Task<ActionResult> Login(LoginModel model)
         {
             ViewBag.isRegistrationRedirect = false;
+
+            var user = await _userManager.FindByNameAsync(model.UserName);
+            if (user != null && !user.EmailConfirmed)
+            {
+                model.needsEmailConfirmed = true;
+                ViewBag.UserID = user.Id;
+                ModelState.AddModelError("EmailConfirmation","Email has not been confirmed.");
+            }
+
             if (ModelState.IsValid)
             {
                 var status = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, true, false);
