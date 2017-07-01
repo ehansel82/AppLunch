@@ -8,15 +8,31 @@
 
 <hr />
 
+@if (ViewBag.isRegistrationRedirect)
+{
+    <div>An email confirmation link has been sent. Please confirm your email and login.</div>
+}
+
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
-    @Html.ValidationSummary();
+    @Html.ValidationSummary()
+    @Html.AntiForgeryToken()
 
-    @Html.LabelFor(x => x.UserName);
-    @Html.TextBoxFor(x => x.UserName);
+    <div>
+        @Html.LabelFor(x => x.UserName):
+        @Html.EditorFor(x => x.UserName)
+    </div>
 
-    @Html.LabelFor(x => x.Password);
-    @Html.TextBoxFor(x => x.Password);
+    <div>
+        @Html.LabelFor(x => x.Password):
+        @Html.EditorFor(x => x.Password)
+    </div>
 
-    <input class="btn" type="submit" value="Login" />
+    <div>
+        <input class="btn" type="submit" value="Login" />
+    </div>
+
+    <div>
+        @Html.ActionLink("Need an account?", "Register")
+    </div>
 }

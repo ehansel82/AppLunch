@@ -8,13 +8,27 @@
 
 <hr />
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { autocomplete="off" }))
 {
-    @Html.LabelFor(x => x.UserName);
-    @Html.TextBoxFor(x => x.UserName);
+    @Html.ValidationSummary();
+    @Html.AntiForgeryToken();
 
-    @Html.LabelFor(x => x.Password);
-    @Html.TextBoxFor(x => x.Password);
+    <div>
+        @Html.LabelFor(x => x.UserName)<span>:</span>
+        @Html.TextBoxFor(x => x.UserName, new { autocomplete = "off" })
+    </div>
 
-    <input class="btn" type="submit" value="Register" />
+    <div>
+        @Html.LabelFor(x => x.Password)<span>:</span>
+        @Html.PasswordFor(x => x.Password, new { autocomplete = "off" })
+    </div>
+
+    <div>
+        @Html.LabelFor(x => x.ConfirmPassword)<span>:</span>
+        @Html.PasswordFor(x => x.ConfirmPassword, new { autocomplete="off"})
+    </div>
+
+    <div>
+        <input class="btn" type="submit" value="Register" />
+    </div>
 }
