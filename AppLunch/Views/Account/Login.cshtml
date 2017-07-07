@@ -13,6 +13,11 @@
     <div>An email confirmation link has been sent. Please confirm your email and login.</div>
 }
 
+@if (Model.isPasswordRedirect)
+{
+    <div>An email has been sent with instructions on how to reset your password.</div>
+}
+
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
     @Html.ValidationSummary()
@@ -20,6 +25,11 @@
     if (Model.needsEmailConfirmed)
     {
         <div>Click @Html.ActionLink("Here", "ResendEmailConfirmation", new { userID = ViewBag.UserID }) to resend confirmation email.</div>
+    }
+
+    if (Model.suggestPasswordReset)
+    {
+        <div>Forgot your password? Click @Html.ActionLink("Here", "PasswordResetInit", new { userID = ViewBag.UserID } )</div>
     }
 
     @Html.AntiForgeryToken()

@@ -35,8 +35,9 @@
     </nav>
     @if (ViewBag.LoggedInUserName != null)
     {
-        <div style="padding: 15px 0 6px 0;">
-            <span style="float: right; padding-right: 5px">Logged In: @ViewBag.LoggedInUserName</span>
+        <div style="float: right; padding: 15px 0 6px 0;">
+            <span style="padding-right: 5px">Logged In: @ViewBag.LoggedInUserName</span>
+            <div>@Html.ActionLink("Logout","Logout","Account")</div>
         </div>
         <hr />
     }
