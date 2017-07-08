@@ -6,7 +6,7 @@
 [Oo]bj
 [Bb]in
 [Dd]ebug
-[Bb]uild/
+#[Bb]uild/
 *.user
 *.suo
 *.exe
