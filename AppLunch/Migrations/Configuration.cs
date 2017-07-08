@@ -5,14 +5,14 @@ namespace AppLunch.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<AppLunch.DataAccess.AppLunchDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<AppLunch.DataAccess.AppContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(AppLunch.DataAccess.AppLunchDbContext context)
+        protected override void Seed(AppLunch.DataAccess.AppContext context)
         {
             //  This method will be called after migrating to the latest version.
 

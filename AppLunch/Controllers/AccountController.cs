@@ -16,8 +16,8 @@ namespace AppLunch.Controllers
     {
         private IAuthenticationManager _authManager => HttpContext.GetOwinContext().Authentication;
         private RoleManager<IdentityRole> _roleManager => HttpContext.GetOwinContext().Get<RoleManager<IdentityRole>>();
-        private SignInManager<AppLunchUser, string> _signInManager => HttpContext.GetOwinContext().Get<SignInManager<AppLunchUser, string>>();
-        private UserManager<AppLunchUser> _userManager => HttpContext.GetOwinContext().Get<UserManager<AppLunchUser>>();
+        private SignInManager<AppIdentityUser, string> _signInManager => HttpContext.GetOwinContext().Get<SignInManager<AppIdentityUser, string>>();
+        private UserManager<AppIdentityUser> _userManager => HttpContext.GetOwinContext().Get<UserManager<AppIdentityUser>>();
 
         [HttpGet]
         public async Task<ActionResult> ConfirmEmail(string userid, string token)
@@ -118,7 +118,7 @@ namespace AppLunch.Controllers
             if (ModelState.IsValid)
             {
                 
-                var user = new AppLunchUser(model.UserName) { Email = model.UserName,
+                var user = new AppIdentityUser(model.UserName) { Email = model.UserName,
                                                               FirstName = model.FirstName,
                                                               LastName = model.LastName };
 
@@ -126,6 +126,8 @@ namespace AppLunch.Controllers
 
                 if (result.Succeeded)
                 {
+                    var roleResult = _userManager.AddToRole(user.Id, "AppLunch_User");
+
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var confirmUrl = Url.Action("ConfirmEmail", "Account", new { userid = user.Id, token = token }, Request.Url.Scheme);
                     await _userManager.SendEmailAsync(user.Id, "Lunch Generator App Email Confirmation", $"Click <a href='{confirmUrl}'>here</a> to confirm your email.");

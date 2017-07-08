@@ -7,14 +7,14 @@ using System.Web;
 
 namespace AppLunch.DataAccess
 {
-    public class AppLunchUser : IdentityUser
+    public class AppIdentityUser : IdentityUser
     {
-        public AppLunchUser() : base()
+        public AppIdentityUser() : base()
         {
 
         }
 
-        public AppLunchUser(string userName) : base(userName)
+        public AppIdentityUser(string userName) : base(userName)
         {
         }
 
