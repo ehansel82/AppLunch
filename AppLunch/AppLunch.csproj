@@ -168,11 +168,21 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="DataAccess\AppLunchDbContext.cs" />
     <Compile Include="Filters\UserNameAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="DataAccess\AppLunchUser.cs" />
+    <Compile Include="Migrations\201707080138145_InitialCreate.cs" />
+    <Compile Include="Migrations\201707080138145_InitialCreate.Designer.cs">
+      <DependentUpon>201707080138145_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707080139265_IdentityNameFields.cs" />
+    <Compile Include="Migrations\201707080139265_IdentityNameFields.Designer.cs">
+      <DependentUpon>201707080139265_IdentityNameFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
@@ -203,6 +213,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201707080138145_InitialCreate.resx">
+      <DependentUpon>201707080138145_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707080139265_IdentityNameFields.resx">
+      <DependentUpon>201707080139265_IdentityNameFields.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

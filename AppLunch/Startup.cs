@@ -1,4 +1,6 @@
-﻿using AppLunch.Services;
+﻿using AppLunch.DataAccess;
+using AppLunch.Models;
+using AppLunch.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -14,21 +16,24 @@ namespace AppLunch
     {
         public void Configuration(IAppBuilder app)
         {
-            string identityConnString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+           /*string identityConnString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             app.CreatePerOwinContext(() =>
-               new IdentityDbContext(identityConnString));
+               new IdentityDbContext(identityConnString));*/
 
-            app.CreatePerOwinContext<UserStore<IdentityUser>>((opt, cont) =>
-               new UserStore<IdentityUser>(cont.Get<IdentityDbContext>()));
+            app.CreatePerOwinContext(() =>
+                new AppLunchDbContext());
+
+            app.CreatePerOwinContext<UserStore<AppLunchUser>>((opt, cont) =>
+               new UserStore<AppLunchUser>(cont.Get<AppLunchDbContext>()));
 
             app.CreatePerOwinContext<RoleStore<IdentityRole>>((opt, cont) =>
-                new RoleStore<IdentityRole>(cont.Get<IdentityDbContext>()));
+                new RoleStore<IdentityRole>(cont.Get<AppLunchDbContext>()));
 
-            app.CreatePerOwinContext<UserManager<IdentityUser>>(
+            app.CreatePerOwinContext<UserManager<AppLunchUser>>(
             (opt, cont) =>
             {
-                var userManager = new UserManager<IdentityUser>(cont.Get<UserStore<IdentityUser>>());
-                userManager.UserTokenProvider = new DataProtectorTokenProvider<IdentityUser>(opt.DataProtectionProvider.Create());
+                var userManager = new UserManager<AppLunchUser>(cont.Get<UserStore<AppLunchUser>>());
+                userManager.UserTokenProvider = new DataProtectorTokenProvider<AppLunchUser>(opt.DataProtectionProvider.Create());
                 userManager.EmailService = new EmailService();
                 return userManager;
             });
@@ -38,8 +43,8 @@ namespace AppLunch
                 return new RoleManager<IdentityRole>(cont.Get<RoleStore<IdentityRole>>());
             });
 
-            app.CreatePerOwinContext<SignInManager<IdentityUser, string>>((opt, cont) =>
-               new SignInManager<IdentityUser, string>(cont.Get<UserManager<IdentityUser>>(), cont.Authentication));
+            app.CreatePerOwinContext<SignInManager<AppLunchUser, string>>((opt, cont) =>
+               new SignInManager<AppLunchUser, string>(cont.Get<UserManager<AppLunchUser>>(), cont.Authentication));
 
             app.UseCookieAuthentication(new Microsoft.Owin.Security.Cookies.CookieAuthenticationOptions()
             {

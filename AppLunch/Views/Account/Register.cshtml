@@ -19,6 +19,16 @@
     </div>
 
     <div>
+        @Html.LabelFor(x => x.FirstName)<span>:</span>
+        @Html.TextBoxFor(x => x.FirstName, new { autocomplete = "off" })
+    </div>
+
+    <div>
+        @Html.LabelFor(x => x.LastName)<span>:</span>
+        @Html.TextBoxFor(x => x.LastName, new { autocomplete = "off" })
+    </div>
+
+    <div>
         @Html.LabelFor(x => x.Password)<span>:</span>
         @Html.PasswordFor(x => x.Password, new { autocomplete = "off" })
     </div>
