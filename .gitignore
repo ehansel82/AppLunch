@@ -6,7 +6,7 @@
 [Oo]bj
 [Bb]in
 [Dd]ebug
-#[Bb]uild/
+[Bb]uild/
 *.user
 *.suo
 *.exe
@@ -45,11 +45,6 @@ Ankh.NoLoad
 
 #Other
 .svn
-
-# Include DLLs if they're in the NuGet packages directory
-packages
-!/packages/*/lib/*.dll
-!/packages/*/lib/*/*.dll
 
 #Connections/Settings
 connections.config

@@ -12,6 +12,8 @@ namespace AppLunch.DataAccess
 
         public DbSet<Member> Members { get; set; }
 
+        public DbSet<Location> Locations { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -269,6 +269,10 @@
     <Compile Include="Migrations\201707081345429_RenameUserToMember.Designer.cs">
       <DependentUpon>201707081345429_RenameUserToMember.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707092107213_NewLocationTable.cs" />
+    <Compile Include="Migrations\201707092107213_NewLocationTable.Designer.cs">
+      <DependentUpon>201707092107213_NewLocationTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ManageUsersModel.cs" />
@@ -317,6 +321,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707081345429_RenameUserToMember.resx">
       <DependentUpon>201707081345429_RenameUserToMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707092107213_NewLocationTable.resx">
+      <DependentUpon>201707092107213_NewLocationTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
