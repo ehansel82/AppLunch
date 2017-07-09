@@ -9,10 +9,10 @@
 {
     @Html.AntiForgeryToken();
 
-    <div>Click the button to resend an email to confirm your account.</div>
+    <div class="text-info" style="padding-bottom: 25px;">Click the button to resend an email to confirm your account.</div>
     @Html.Hidden("userID", (string)ViewBag.UserID);
     <div>
-        <input type="submit" class="btn" name="ResendEmail" value="Resend Email" />
+        <input type="submit" class="btn btn-primary" name="ResendEmail" value="Resend Email" />
     </div>
 }
 

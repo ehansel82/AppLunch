@@ -38,7 +38,7 @@
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                @Html.CheckBoxFor(x => item.isManager, new { @class="managerToggle", data_toggle="toggle", data_height="5px", id=item.IdentityID })
+                @Html.CheckBoxFor(x => item.isManager, new { @class="managerToggle", data_on="YES", data_off="NO", data_toggle="toggle", data_height="5px", id=item.IdentityID })
             </td>
         </tr>
     }

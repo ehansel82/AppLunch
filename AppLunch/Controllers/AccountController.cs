@@ -132,7 +132,7 @@ namespace AppLunch.Controllers
             if (ModelState.IsValid)
             {
                 
-                var user = new AppIdentityUser(model.UserName) { Email = model.UserName,
+                var user = new AppIdentityUser(model.Email) { Email = model.Email,
                                                               FirstName = model.FirstName,
                                                               LastName = model.LastName };
 

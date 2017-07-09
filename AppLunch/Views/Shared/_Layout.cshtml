@@ -14,11 +14,14 @@
     <nav class="navbar navbar-default navbar-fixed-top" style="margin-bottom: 15px">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+                @if (!ViewBag.IsAccountController)
+                {
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                }
                 @Html.ActionLink("Lunch Generator", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
 
@@ -53,10 +56,10 @@
     </nav>
     @if (!ViewBag.IsAccountController)
     {
-        <div>
-            <span style="float: right; padding-right: 15px">@ViewBag.LoggedInUserName</span>
+        <div style="border-bottom: 1px solid gray">
+            <span style="float: right; padding: 15px 15px 5px 0">@ViewBag.LoggedInUserName</span>
+            <div class="clearfix"></div>
         </div>
-        <hr />
     }
 
     <div class="container body-content" style="margin-top: 20px;">

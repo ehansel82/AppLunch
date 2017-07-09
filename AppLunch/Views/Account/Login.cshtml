@@ -4,18 +4,26 @@
     ViewBag.Title = "Login";
 }
 
+@section PageStyles {
+    <style>
+        .loginInfo {
+            padding-bottom: 10px;
+        }
+    </style>
+}
+
 
 <div class="panel panel-default">
     <div class="panel-heading"><strong>Please Login</strong></div>
     <div class="panel-body">
         @if (Model.isRegistrationRedirect)
         {
-            <div>An email confirmation link has been sent. Please confirm your email and login.</div>
+            <div class="text-info loginInfo" style="padding-bottom: 10px;">An email confirmation link has been sent. Please confirm your email and login.</div>
         }
 
         @if (Model.isPasswordRedirect)
         {
-            <div>An email has been sent with instructions on how to reset your password.</div>
+            <div class="text-info loginInfo" style="padding-bottom: 10px;">An email has been sent with instructions on how to reset your password.</div>
         }
 
         @using (Html.BeginForm("Login", "Account", FormMethod.Post))
@@ -27,12 +35,12 @@
 
             if (Model.needsEmailConfirmed)
             {
-                <div>Click @Html.ActionLink("Here", "ResendEmailConfirmation", new { userID = ViewBag.UserID }) to resend confirmation email.</div>
+                <div class="text-info loginInfo">Click @Html.ActionLink("here", "ResendEmailConfirmation", new { userID = ViewBag.UserID }) to resend confirmation email.</div>
             }
 
             if (Model.suggestPasswordReset)
             {
-                <div>Forgot your password? Click @Html.ActionLink("Here", "PasswordResetInit", new { userID = ViewBag.UserID })</div>
+                <div class="text-info loginInfo">Forgot your password? Click @Html.ActionLink("here", "PasswordResetInit", new { userID = ViewBag.UserID })</div>
             }
 
             <div class="form-group">
@@ -53,7 +61,7 @@
                 <input class="btn" type="submit" value="Login" />
             </div>
 
-            <div style="margin-top: 10px;">
+            <div style="margin-top: 20px;">
                 @Html.ActionLink("Need an account?", "Register")
             </div>
         }

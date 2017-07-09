@@ -13,7 +13,7 @@ namespace AppLunch.Models
         [StringLength(20)]
         [Required]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Password and ConfirmPassword must match.")]
+        [Compare("NewPassword", ErrorMessage = "New Password and Confirm New Password must match.")]
         [Display(Name="Confirm New Password")]
         public string ConfirmNewPassword { get; set; }
 
