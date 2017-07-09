@@ -1,26 +1,46 @@
 ﻿using AppLunch.DataAccess;
+using AppLunch.Interfaces;
+using AppLunch.Models;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace AppLunch.Controllers
 {
+    [Authorize(Roles=("AppLunch_Admin"))]
     public class AdminController : Controller
     {
-
         private RoleManager<IdentityRole> _roleManager => HttpContext.GetOwinContext().Get<RoleManager<IdentityRole>>();
         private UserManager<AppIdentityUser> _userManager => HttpContext.GetOwinContext().Get<UserManager<AppIdentityUser>>();
+        private IAppRepository _appRepo;
+        private IMapper _mapper;
+
+        public AdminController(IAppRepository appRepo,
+                               IMapper mapper)
+        {
+            _appRepo = appRepo;
+            _mapper = mapper;
+        }
 
         [HttpGet]
-        public ActionResult ManageUsers()
+        public async Task<ActionResult> ManageUsers()
         {
+            var users = (await _appRepo.GetMembersAsync());
 
-            return View();
+            var model = _mapper.Map<List<ManageUsersModel>>(users);
+
+            foreach(var rec in model)
+            {
+                rec.isManager = _userManager.GetRoles(rec.IdentityID).ToList().Exists(x => x == "AppLunch_Manager");            }
+
+            return View(model);
         }
     }
 }

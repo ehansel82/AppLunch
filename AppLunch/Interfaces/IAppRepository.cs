@@ -9,6 +9,8 @@ namespace AppLunch.Interfaces
 {
     public interface IAppRepository
     {
-        List<Member> GetMembers();
+        Task<List<Member>> GetMembersAsync();
+
+        Task CreateMemberAsync(Member member);
     }
 }

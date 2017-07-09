@@ -1,4 +1,5 @@
 ﻿using AppLunch.DataAccess;
+using AppLunch.Interfaces;
 using AppLunch.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -19,6 +20,14 @@ namespace AppLunch.Controllers
         private SignInManager<AppIdentityUser, string> _signInManager => HttpContext.GetOwinContext().Get<SignInManager<AppIdentityUser, string>>();
         private UserManager<AppIdentityUser> _userManager => HttpContext.GetOwinContext().Get<UserManager<AppIdentityUser>>();
 
+        private IAppRepository _appRepo;
+
+        public AccountController(IAppRepository appRepo)
+        {
+            _appRepo = appRepo;
+        }
+
+        
         [HttpGet]
         public async Task<ActionResult> ConfirmEmail(string userid, string token)
         {
@@ -126,7 +135,8 @@ namespace AppLunch.Controllers
 
                 if (result.Succeeded)
                 {
-                    var roleResult = _userManager.AddToRole(user.Id, "AppLunch_User");
+                    var roleResult = await _userManager.AddToRoleAsync(user.Id, "AppLunch_User");
+                    await _appRepo.CreateMemberAsync(new Member() { IdentityID = user.Id, FirstName = model.FirstName, LastName = model.LastName });
 
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var confirmUrl = Url.Action("ConfirmEmail", "Account", new { userid = user.Id, token = token }, Request.Url.Scheme);

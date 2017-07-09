@@ -12,6 +12,8 @@ namespace AppLunch.App_Start
     using Ninject.Web.Common;
     using AppLunch.Interfaces;
     using AppLunch.DataAccess;
+    using AutoMapper;
+    using AppLunch.Models;
 
     public static class NinjectWebCommon 
     {
@@ -63,7 +65,13 @@ namespace AppLunch.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IAppRepository>().To<AppRepository>();
-        }        
+            kernel.Bind<IMapper>().ToConstant(new Mapper(AutomapperConfig())).InRequestScope();
+            kernel.Bind<IAppRepository>().To<AppRepository>().InRequestScope();
+        }
+
+        private static MapperConfiguration AutomapperConfig()
+        {
+            return new MapperConfiguration(cfg => cfg.CreateMap<Member, ManageUsersModel>());
+        }
     }
 }

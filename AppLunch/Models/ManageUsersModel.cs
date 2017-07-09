@@ -1,13 +1,15 @@
 ﻿using AppLunch.DataAccess;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace AppLunch.Models
 {
-    public class ManageUsersModel
+    [NotMapped]
+    public class ManageUsersModel : Member
     {
-        public List<AppIdentityUser> Users { get; set; }
+        public bool isManager { get; set; }
     }
 }

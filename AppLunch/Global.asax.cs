@@ -1,4 +1,7 @@
-﻿using AppLunch.Filters;
+﻿using AppLunch.DataAccess;
+using AppLunch.Filters;
+using AppLunch.Models;
+using AutoMapper;
 using System.Web.Mvc;
 using System.Web.Routing;
 
