@@ -4,51 +4,61 @@
     ViewBag.Title = "Login";
 }
 
-<h2>Please Login</h2>
 
-<hr />
+<div class="panel panel-default">
+    <div class="panel-heading"><strong>Please Login</strong></div>
+    <div class="panel-body">
+        @if (Model.isRegistrationRedirect)
+        {
+            <div>An email confirmation link has been sent. Please confirm your email and login.</div>
+        }
 
-@if (Model.isRegistrationRedirect)
-{
-    <div>An email confirmation link has been sent. Please confirm your email and login.</div>
-}
+        @if (Model.isPasswordRedirect)
+        {
+            <div>An email has been sent with instructions on how to reset your password.</div>
+        }
 
-@if (Model.isPasswordRedirect)
-{
-    <div>An email has been sent with instructions on how to reset your password.</div>
-}
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+        {
 
-@using (Html.BeginForm("Login", "Account", FormMethod.Post))
-{
-    @Html.ValidationSummary()
+            @Html.AntiForgeryToken()
 
-    if (Model.needsEmailConfirmed)
-    {
-        <div>Click @Html.ActionLink("Here", "ResendEmailConfirmation", new { userID = ViewBag.UserID }) to resend confirmation email.</div>
-    }
+            @Html.ValidationSummary("", new { @class = "text-danger" });
 
-    if (Model.suggestPasswordReset)
-    {
-        <div>Forgot your password? Click @Html.ActionLink("Here", "PasswordResetInit", new { userID = ViewBag.UserID } )</div>
-    }
+            if (Model.needsEmailConfirmed)
+            {
+                <div>Click @Html.ActionLink("Here", "ResendEmailConfirmation", new { userID = ViewBag.UserID }) to resend confirmation email.</div>
+            }
 
-    @Html.AntiForgeryToken()
+            if (Model.suggestPasswordReset)
+            {
+                <div>Forgot your password? Click @Html.ActionLink("Here", "PasswordResetInit", new { userID = ViewBag.UserID })</div>
+            }
 
-    <div>
-        @Html.LabelFor(x => x.UserName):
-        @Html.EditorFor(x => x.UserName)
+            <div class="form-group">
+                <div>
+                    @Html.LabelFor(x => x.UserName):
+                    @Html.TextBoxFor(x => x.UserName, new { @class="form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    @Html.LabelFor(x => x.Password):
+                    @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div>
+                <input class="btn" type="submit" value="Login" />
+            </div>
+
+            <div style="margin-top: 10px;">
+                @Html.ActionLink("Need an account?", "Register")
+            </div>
+        }
     </div>
+</div>
 
-    <div>
-        @Html.LabelFor(x => x.Password):
-        @Html.EditorFor(x => x.Password)
-    </div>
 
-    <div>
-        <input class="btn" type="submit" value="Login" />
-    </div>
 
-    <div>
-        @Html.ActionLink("Need an account?", "Register")
-    </div>
-}

@@ -53,7 +53,11 @@ namespace AppLunch.Controllers
             ViewBag.isRegistrationRedirect = false;
 
             var user = await _userManager.FindByNameAsync(model.UserName);
-            if (user != null && !user.EmailConfirmed)
+            if(user == null)
+            {
+                ModelState.AddModelError("", "Invalid Credentials.");
+            }
+            else if (!user.EmailConfirmed)
             {
                 model.needsEmailConfirmed = true;
                 ViewBag.UserID = user.Id;
@@ -78,6 +82,7 @@ namespace AppLunch.Controllers
                     }
                 }
             }
+
             return View(model);
         }
 

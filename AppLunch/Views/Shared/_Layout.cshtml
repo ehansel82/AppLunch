@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Lunch Generator</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/flatly.bootstrap.css" rel="stylesheet" /> 
+    <link href="~/Content/flatly.bootstrap.css" rel="stylesheet" />
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    @RenderSection("PageStyles", required: false)
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top" style="margin-bottom: 15px">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -21,32 +22,50 @@
                 @Html.ActionLink("Lunch Generator", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
 
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Manage Users</a></li>
+            @if (!ViewBag.IsAccountController)
+            {
+
+                <div class="navbar-collapse collapse">
+                    @if (ViewBag.IsAdmin)
+                    {
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Manage Users", "ManageUsers", "Admin")</li>
+                                </ul>
+                            </li>
                         </ul>
-                    </li>
-                </ul>
-            </div>
+                    }
+
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            }
         </div>
     </nav>
-    @if (ViewBag.LoggedInUserName != null)
+    @if (!ViewBag.IsAccountController)
     {
-        <div style="float: right; padding: 15px 0 6px 0;">
-            <span style="padding-right: 5px">Logged In: @ViewBag.LoggedInUserName</span>
-            <div>@Html.ActionLink("Logout","Logout","Account")</div>
+        <div>
+            <span style="float: right; padding-right: 15px">@ViewBag.LoggedInUserName</span>
         </div>
         <hr />
     }
 
-    <div class="container body-content">
+    <div class="container body-content" style="margin-top: 20px;">
         @RenderBody()
     </div>
 
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+
+    @RenderSection("PageScripts", required: false)
 </body>
 </html>

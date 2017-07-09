@@ -1,14 +1,20 @@
 ﻿@model IEnumerable<AppLunch.Models.ManageUsersModel>
 
-@{
-    ViewBag.Title = "ManageUsers";
+@section PageStyles {
+<link href="~/bower_components/bootstrap-toggle/css/bootstrap-toggle.min.css" rel="stylesheet" />
+<style>
+     td {
+        vertical-align: middle !important;
+    }
+</style>
 }
 
-<h2>ManageUsers</h2>
+@{
+    ViewBag.Title = "Manage Users";
+}
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2>Manage Users</h2>
+
 <table class="table">
     <tr>
         <th>
@@ -18,34 +24,37 @@
             @Html.DisplayNameFor(model => model.LastName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IdentityID)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.isManager)
         </th>
-        <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IdentityID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.isManager)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.CheckBoxFor(x => item.isManager, new { @class="managerToggle", data_toggle="toggle", data_height="5px", id=item.IdentityID })
+            </td>
+        </tr>
+    }
 </table>
+
+@section PageScripts {
+<script src="~/bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+
+<script>
+    $(".managerToggle").change(function () {
+        var $this = $(this);
+        if ($this.is(":checked")) {
+            $.post("SetToManager", { identityID: $this.prop("id") });
+        } else {
+            $.post("RevokeManager", { identityID: $this.prop("id") });
+        }
+    });
+</script>
+}

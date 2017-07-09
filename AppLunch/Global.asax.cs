@@ -14,7 +14,7 @@ namespace AppLunch
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            GlobalFilters.Filters.Add(new UserNameAttribute());
+            GlobalFilters.Filters.Add(new ViewBagGlobalAttribute());
         }
     }
 }

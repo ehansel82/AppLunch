@@ -10,6 +10,7 @@ namespace AppLunch.Models
         [StringLength(256)]
         [Required]
         [EmailAddress]
+        [Display(Name ="User Name")]
         public string UserName { get; set; }
 
         [DataMember]
