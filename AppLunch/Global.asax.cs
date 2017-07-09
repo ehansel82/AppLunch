@@ -1,7 +1,6 @@
-﻿using AppLunch.DataAccess;
-using AppLunch.Filters;
-using AppLunch.Models;
-using AutoMapper;
+﻿using AppLunch.Filters;
+using Microsoft.ApplicationInsights.Extensibility;
+using System.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -15,6 +14,8 @@ namespace AppLunch
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             GlobalFilters.Filters.Add(new ViewBagGlobalAttribute());
+
+            TelemetryConfiguration.Active.InstrumentationKey = ConfigurationManager.AppSettings["InstrumentationKey"];
         }
     }
 }

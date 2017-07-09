@@ -12,5 +12,13 @@ namespace AppLunch.Interfaces
         Task<List<Member>> GetMembersAsync();
 
         Task CreateMemberAsync(Member member);
+
+        Task<List<Location>> GetLocationsAsync();
+
+        Task DeleteLocation(int id);
+
+        Task UpdateLocation(Location location);
+
+        Task<Location> InsertLocation(Location location);
     }
 }

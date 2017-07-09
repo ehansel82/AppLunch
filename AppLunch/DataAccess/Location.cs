@@ -16,6 +16,7 @@ namespace AppLunch.DataAccess
         [Required]
         public string CreateBy { get; set; }
 
+        [Required]
         public DateTime CreateDate { get; set; }
     }
 }
