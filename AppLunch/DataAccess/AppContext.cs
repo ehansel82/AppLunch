@@ -14,6 +14,8 @@ namespace AppLunch.DataAccess
 
         public DbSet<Location> Locations { get; set; }
 
+        public DbSet<Invite> Invites { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

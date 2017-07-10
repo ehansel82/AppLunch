@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -12,7 +13,6 @@ using System.Web.Mvc;
 
 namespace AppLunch.Controllers
 {
-    [AllowAnonymous]
     public class AccountController : Controller
     {
         private IAuthenticationManager _authManager => HttpContext.GetOwinContext().Authentication;
@@ -26,9 +26,9 @@ namespace AppLunch.Controllers
         {
             _appRepo = appRepo;
         }
-
-        
+  
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userid, string token)
         {
             var result = await _userManager.ConfirmEmailAsync(userid, token);
@@ -40,6 +40,7 @@ namespace AppLunch.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Login(bool? isRegistrationRedirect)
         {
             var vm = new LoginModel() { isRegistrationRedirect = isRegistrationRedirect ?? false };
@@ -48,6 +49,7 @@ namespace AppLunch.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken()]
+        [AllowAnonymous]
         public async Task<ActionResult> Login(LoginModel model)
         {
             ViewBag.isRegistrationRedirect = false;
@@ -87,6 +89,7 @@ namespace AppLunch.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Logout()
         {
             _authManager.SignOut();
@@ -95,6 +98,7 @@ namespace AppLunch.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult PasswordResetInit(string userID)
         {
             ViewBag.UserID = userID;
@@ -104,6 +108,7 @@ namespace AppLunch.Controllers
         [HttpPost]
         [ActionName("PasswordResetInit")]
         [ValidateAntiForgeryToken()]
+        [AllowAnonymous]
         public async Task<ActionResult> PasswordResetInit_Post(string userID)
         {
             var user = await _userManager.FindByIdAsync(userID);
@@ -120,6 +125,7 @@ namespace AppLunch.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
@@ -127,6 +133,7 @@ namespace AppLunch.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken()]
+        [AllowAnonymous]
         public async Task<ActionResult> Register(RegistrationModel model)
         {
             if (ModelState.IsValid)
@@ -156,6 +163,7 @@ namespace AppLunch.Controllers
             return View(model);
         }
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult ResendEmailConfirmation(string userID)
         {
             ViewBag.UserID = userID;
@@ -165,6 +173,7 @@ namespace AppLunch.Controllers
         [HttpPost]
         [ActionName("ResendEmailConfirmation")]
         [ValidateAntiForgeryToken()]
+        [AllowAnonymous]
         public async Task<ActionResult> ResendEmailConfirmation_Post(string userID)
         {
             var user = await _userManager.FindByIdAsync(userID);
@@ -181,6 +190,7 @@ namespace AppLunch.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult ResetPassword(string userid, string token)
         {
             return View();
@@ -188,6 +198,7 @@ namespace AppLunch.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken()]
+        [AllowAnonymous]
         public async Task<ActionResult> ResetPassword(ResetPasswordModel model)
         {
             if (ModelState.IsValid)
@@ -200,6 +211,32 @@ namespace AppLunch.Controllers
                 else
                 {
                     ModelState.AddModelError("", status.Errors.First());
+                }
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "AppLunch_Manager")]
+        public ActionResult Invite()
+        {
+            var model = new InviteModel() { Inviter = HttpContext.User.Identity.Name };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "AppLunch_Manager")]
+        public async Task<ActionResult> Invite(InviteModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _userManager.FindByName(model.Inviter);
+                if(user != null)
+                {
+                    var member = await _appRepo.GetMemberByIdentityIdAsync(user.Id);
+                    var invite = await _appRepo.InsertInviteAsync(new Invite() { InviteeEmail = model.Invitee,
+                                                                                 Inviter = user.UserName,
+                                                                                 CreateDate = DateTime.Now});
                 }
             }
             return View(model);

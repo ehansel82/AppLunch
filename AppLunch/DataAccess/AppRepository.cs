@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace AppLunch.DataAccess
 {
@@ -36,11 +37,29 @@ namespace AppLunch.DataAccess
             }
         }
 
+        public async Task<Member> GetMemberByIdentityIdAsync(string identityID)
+        {
+            using (var ctx = new AppContext())
+            {
+                return await ctx.Members.Where(x => x.IdentityID == identityID).SingleAsync();
+            }
+        }
+
         public async Task<List<Member>> GetMembersAsync()
         {
             using (var ctx = new AppContext())
             {
                 return await ctx.Members.ToListAsync();
+            }
+        }
+
+        public async Task<Invite> InsertInviteAsync(Invite invite)
+        {
+            using (var ctx = new AppContext())
+            {
+                ctx.Invites.Add(invite);
+                await ctx.SaveChangesAsync();
+                return invite;
             }
         }
 

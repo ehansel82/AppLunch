@@ -11,6 +11,10 @@ namespace AppLunch.Interfaces
     {
         Task<List<Member>> GetMembersAsync();
 
+        Task<Member> GetMemberByIdentityIdAsync(string identityID);
+
+        Task<Invite> InsertInviteAsync(Invite invite);
+
         Task CreateMemberAsync(Member member);
 
         Task<List<Location>> GetLocationsAsync();
