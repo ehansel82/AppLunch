@@ -2,7 +2,7 @@
 *.DS_Store
 [Tt]humbs.db
 
-!packages
+packages/
 
 #Visual Studio Files
 [Oo]bj
