@@ -15,7 +15,10 @@ namespace AppLunch
 
             GlobalFilters.Filters.Add(new ViewBagGlobalAttribute());
 
+#if (RELEASE)
             TelemetryConfiguration.Active.InstrumentationKey = ConfigurationManager.AppSettings["InstrumentationKey"];
+#endif
+
         }
     }
 }
