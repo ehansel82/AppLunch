@@ -2,17 +2,17 @@ namespace AppLunch.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    public partial class NewLocationTable : DbMigration
+    public partial class NewInviteTable : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "AppLunch.Location",
+                "AppLunch.Invite",
                 c => new
                 {
-                    ID = c.Int(nullable: false, identity: true),
-                    Name = c.String(nullable: false, maxLength: 50),
-                    CreateBy = c.String(nullable: false),
+                    ID = c.Guid(nullable: false, identity: true),
+                    InviteeEmail = c.String(maxLength: 256),
+                    Inviter = c.String(maxLength: 256),
                     CreateDate = c.DateTime(nullable: false),
                 })
                 .PrimaryKey(t => t.ID);
@@ -20,7 +20,7 @@ namespace AppLunch.Migrations
 
         public override void Down()
         {
-            DropTable("AppLunch.Location");
+            DropTable("AppLunch.Invite");
         }
     }
 }

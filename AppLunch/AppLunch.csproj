@@ -243,6 +243,7 @@
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="DataAccess\AppContext.cs" />
     <Compile Include="DataAccess\AppRepository.cs" />
+    <Compile Include="DataAccess\Invite.cs" />
     <Compile Include="DataAccess\Member.cs" />
     <Compile Include="DataAccess\Location.cs" />
     <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
@@ -253,6 +254,7 @@
     </Compile>
     <Compile Include="DataAccess\AppIdentityUser.cs" />
     <Compile Include="Interfaces\IAppRepository.cs" />
+    <Compile Include="Interfaces\IEmailService.cs" />
     <Compile Include="Migrations\201707080138145_InitialCreate.cs" />
     <Compile Include="Migrations\201707080138145_InitialCreate.Designer.cs">
       <DependentUpon>201707080138145_InitialCreate.cs</DependentUpon>
@@ -273,7 +275,12 @@
     <Compile Include="Migrations\201707092107213_NewLocationTable.Designer.cs">
       <DependentUpon>201707092107213_NewLocationTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707102310185_NewInviteTable.cs" />
+    <Compile Include="Migrations\201707102310185_NewInviteTable.Designer.cs">
+      <DependentUpon>201707102310185_NewInviteTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\InviteModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ManageUsersModel.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
@@ -293,12 +300,12 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\ResendEmailConfirmation.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Account\PasswordResetInit.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Admin\ManageUsers.cshtml" />
     <Content Include="Views\Location\Index.cshtml" />
+    <Content Include="Views\Account\Invite.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -324,6 +331,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707092107213_NewLocationTable.resx">
       <DependentUpon>201707092107213_NewLocationTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707102310185_NewInviteTable.resx">
+      <DependentUpon>201707102310185_NewInviteTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

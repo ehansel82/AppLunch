@@ -8,15 +8,16 @@
 
 <hr />
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { autocomplete="off" }))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { autocomplete = "off" }))
 {
     @Html.ValidationSummary("", new { @class = "text-danger" });
     @Html.AntiForgeryToken();
 
+    @Html.HiddenFor(x => x.InviteToken);
     <div style="margin-bottom: 15px">
         <div class="form-group">
             @Html.LabelFor(x => x.Email)
-            @Html.TextBoxFor(x => x.Email, new { autocomplete = "off", @class = "form-control" })
+            @Html.TextBoxFor(x => x.Email, new { autocomplete = "off", @class = "form-control", @readonly="readonly" })
             <small id="emailHelp" class="form-text text-muted">This will also be your account user name.</small>
         </div>
 
@@ -37,7 +38,7 @@
 
         <div class="form-group">
             @Html.LabelFor(x => x.ConfirmPassword)
-            @Html.PasswordFor(x => x.ConfirmPassword, new { autocomplete="off", @class = "form-control" })
+            @Html.PasswordFor(x => x.ConfirmPassword, new { autocomplete = "off", @class = "form-control" })
         </div>
     </div>
 
