@@ -6,7 +6,7 @@
 		var html = $('<div>').text($(this).html()).html()
 		// find number of space/tabs on first line (minus line break)
 		var count = html.match(/^(\s+)/)[0].length - 1
-		// replace tabs/spaces on each lines with 
+		// replace tabs/spaces on each lines with
 		var regex = new RegExp('\\n\\s{'+count+'}', 'g')
 		var code = html.replace(regex, '\n').replace(/\t/g, '  ').trim()
 		// other cleanup
@@ -18,7 +18,6 @@
 	$('code.highlight').each(function() {
 		hljs.highlightBlock(this)
 	});
-
 }(jQuery);
 
 var Demo = function () {}
@@ -44,6 +43,5 @@ Demo.prototype.enable = function(selector) {
 Demo.prototype.disable = function(selector) {
 	$(selector).bootstrapToggle('disable')
 }
-
 
 demo = new Demo()

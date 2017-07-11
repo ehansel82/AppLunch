@@ -37,7 +37,7 @@ namespace AppLunch.Controllers
 
             foreach (var rec in model)
             {
-                rec.isManager = _userManager.GetRoles(rec.IdentityID).ToList().Exists(x => x == "AppLunch_Manager");
+                rec.IsManager = _userManager.GetRoles(rec.IdentityID).ToList().Exists(x => x == "AppLunch_Manager");
             }
 
             return View(model);

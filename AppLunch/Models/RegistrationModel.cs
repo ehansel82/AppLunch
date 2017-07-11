@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace AppLunch.Models
 {
@@ -8,7 +9,7 @@ namespace AppLunch.Models
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-        
+
         [StringLength(20)]
         [Required]
         [DataType(DataType.Password)]
@@ -17,8 +18,8 @@ namespace AppLunch.Models
         [StringLength(20)]
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name ="Confirm Password")]
-        [Compare("Password", ErrorMessage ="Password and ConfirmPassword must match.")]
+        [Display(Name = "Confirm Password")]
+        [Compare("Password", ErrorMessage = "Password and ConfirmPassword must match.")]
         public string ConfirmPassword { get; set; }
 
         [StringLength(20)]
@@ -30,5 +31,8 @@ namespace AppLunch.Models
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
+        [Required]
+        public Guid InviteToken { get; set; }
     }
 }

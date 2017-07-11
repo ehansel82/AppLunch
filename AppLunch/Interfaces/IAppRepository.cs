@@ -1,8 +1,6 @@
 ﻿using AppLunch.DataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AppLunch.Interfaces
@@ -15,14 +13,16 @@ namespace AppLunch.Interfaces
 
         Task<Invite> InsertInviteAsync(Invite invite);
 
+        Task<Invite> GetInviteByIDAsync(Guid id);
+
         Task CreateMemberAsync(Member member);
 
         Task<List<Location>> GetLocationsAsync();
 
-        Task DeleteLocation(int id);
+        Task DeleteLocationAsync(int id);
 
-        Task UpdateLocation(Location location);
+        Task UpdateLocationAsync(Location location);
 
-        Task<Location> InsertLocation(Location location);
+        Task<Location> InsertLocationAsync(Location location);
     }
 }

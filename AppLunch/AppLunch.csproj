@@ -254,6 +254,7 @@
     </Compile>
     <Compile Include="DataAccess\AppIdentityUser.cs" />
     <Compile Include="Interfaces\IAppRepository.cs" />
+    <Compile Include="Interfaces\IEmailService.cs" />
     <Compile Include="Migrations\201707080138145_InitialCreate.cs" />
     <Compile Include="Migrations\201707080138145_InitialCreate.Designer.cs">
       <DependentUpon>201707080138145_InitialCreate.cs</DependentUpon>
@@ -299,7 +300,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\ResendEmailConfirmation.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Account\PasswordResetInit.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />

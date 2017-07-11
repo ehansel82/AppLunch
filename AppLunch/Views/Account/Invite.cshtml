@@ -6,14 +6,16 @@
 
 <h2>Invite New User</h2>
 
-@using(Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    @Html.HiddenFor(x => x.Inviter)
+<div class="container">
+    @using(Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        @Html.HiddenFor(x => x.Inviter)
 
-    @Html.LabelFor(x => x.Invitee, new { @class = "control-label" })
-    @Html.TextAreaFor(x => x.Invitee, new { @class="form-control"})
+        @Html.LabelFor(x => x.Invitee, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.Invitee, new { @class="form-control"})
 
-    <input style="margin-top: 15px;" type="submit" class="btn btn-default" value="Invite User" />
-}
+        <input style="margin-top: 15px;" type="submit" class="btn btn-default" value="Invite User" />
+    }
+</div>

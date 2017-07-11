@@ -12,14 +12,9 @@
     </style>
 }
 
-
 <div class="panel panel-default">
     <div class="panel-heading"><strong>Please Login</strong></div>
     <div class="panel-body">
-        @if (Model.isRegistrationRedirect)
-        {
-            <div class="text-info loginInfo" style="padding-bottom: 10px;">An email confirmation link has been sent. Please confirm your email and login.</div>
-        }
 
         @if (Model.isPasswordRedirect)
         {
@@ -46,7 +41,7 @@
             <div class="form-group">
                 <div>
                     @Html.LabelFor(x => x.UserName):
-                    @Html.TextBoxFor(x => x.UserName, new { @class="form-control" })
+                    @Html.TextBoxFor(x => x.UserName, new { @class = "form-control" })
                 </div>
             </div>
 
@@ -60,13 +55,6 @@
             <div>
                 <input class="btn" type="submit" value="Login" />
             </div>
-
-            <div style="margin-top: 20px;">
-                @Html.ActionLink("Need an account?", "Register")
-            </div>
         }
     </div>
 </div>
-
-
-

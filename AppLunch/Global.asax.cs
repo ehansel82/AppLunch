@@ -1,6 +1,4 @@
 ﻿using AppLunch.Filters;
-using Microsoft.ApplicationInsights.Extensibility;
-using System.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -18,7 +16,6 @@ namespace AppLunch
 #if (RELEASE)
             TelemetryConfiguration.Active.InstrumentationKey = ConfigurationManager.AppSettings["InstrumentationKey"];
 #endif
-
         }
     }
 }

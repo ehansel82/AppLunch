@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AppLunch.DataAccess
 {
@@ -18,7 +18,7 @@ namespace AppLunch.DataAccess
             }
         }
 
-        public async Task DeleteLocation(int id)
+        public async Task DeleteLocationAsync(int id)
         {
             using (var ctx = new AppContext())
             {
@@ -26,6 +26,14 @@ namespace AppLunch.DataAccess
                 ctx.Locations.Attach(temp);
                 ctx.Locations.Remove(temp);
                 await ctx.SaveChangesAsync();
+            }
+        }
+
+        public async Task<Invite> GetInviteByIDAsync(Guid id)
+        {
+            using (var ctx = new AppContext())
+            {
+                return await ctx.Invites.Where(x => x.ID == id).SingleAsync();
             }
         }
 
@@ -63,7 +71,7 @@ namespace AppLunch.DataAccess
             }
         }
 
-        public async Task<Location> InsertLocation(Location location)
+        public async Task<Location> InsertLocationAsync(Location location)
         {
             using (var ctx = new AppContext())
             {
@@ -73,7 +81,7 @@ namespace AppLunch.DataAccess
             }
         }
 
-        public Task UpdateLocation(Location location)
+        public Task UpdateLocationAsync(Location location)
         {
             throw new NotImplementedException();
         }

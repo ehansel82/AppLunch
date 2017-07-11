@@ -21,30 +21,20 @@ namespace AppLunch.Controllers
         private UserManager<AppIdentityUser> _userManager => HttpContext.GetOwinContext().Get<UserManager<AppIdentityUser>>();
 
         private IAppRepository _appRepo;
+        private IEmailService _emailService;
 
-        public AccountController(IAppRepository appRepo)
+        public AccountController(IAppRepository appRepo,
+                                 IEmailService emailService)
         {
             _appRepo = appRepo;
-        }
-  
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userid, string token)
-        {
-            var result = await _userManager.ConfirmEmailAsync(userid, token);
-            if (!result.Succeeded)
-            {
-                return View("Error");
-            }
-            return RedirectToAction("Login");
+            _emailService = emailService;
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult Login(bool? isRegistrationRedirect)
+        public ActionResult Login()
         {
-            var vm = new LoginModel() { isRegistrationRedirect = isRegistrationRedirect ?? false };
-            return View(vm);
+            return View(new LoginModel());
         }
 
         [HttpPost]
@@ -52,10 +42,8 @@ namespace AppLunch.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Login(LoginModel model)
         {
-            ViewBag.isRegistrationRedirect = false;
-
             var user = await _userManager.FindByNameAsync(model.UserName);
-            if(user == null)
+            if (user == null)
             {
                 ModelState.AddModelError("", "Invalid Credentials.");
             }
@@ -117,7 +105,7 @@ namespace AppLunch.Controllers
             {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
                 var resetUrl = Url.Action("ResetPassword", "Account", new { userid = user.Id, token = token }, Request.Url.Scheme);
-                await _userManager.SendEmailAsync(user.Id, "Lunch Generator App - Password Reset Requested", $"Click <a href='{resetUrl}'>here</a> to reset your password.");
+                await _userManager.SendEmailAsync(user.Id, "Lunch Generator - Password Reset Requested", $"Click <a href='{resetUrl}'>here</a> to reset your password.");
                 return RedirectToAction("Login", new { isPasswordRedirect = true });
             }
 
@@ -126,9 +114,11 @@ namespace AppLunch.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(Guid inviteToken, string email)
         {
-            return View();
+            var model = new RegistrationModel() { Email = email, InviteToken = inviteToken };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -138,10 +128,19 @@ namespace AppLunch.Controllers
         {
             if (ModelState.IsValid)
             {
-                
-                var user = new AppIdentityUser(model.Email) { Email = model.Email,
-                                                              FirstName = model.FirstName,
-                                                              LastName = model.LastName };
+                var invite = await _appRepo.GetInviteByIDAsync(model.InviteToken);
+
+                if (invite == null || model.Email != invite.InviteeEmail)
+                {
+                    return new HttpStatusCodeResult(403);
+                }
+
+                var user = new AppIdentityUser(model.Email)
+                {
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -150,9 +149,10 @@ namespace AppLunch.Controllers
                     var roleResult = await _userManager.AddToRoleAsync(user.Id, "AppLunch_User");
                     await _appRepo.CreateMemberAsync(new Member() { IdentityID = user.Id, FirstName = model.FirstName, LastName = model.LastName });
 
+                    //Since we are invite only (atm) automatically confirm the email.
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var confirmUrl = Url.Action("ConfirmEmail", "Account", new { userid = user.Id, token = token }, Request.Url.Scheme);
-                    await _userManager.SendEmailAsync(user.Id, "Lunch Generator App Email Confirmation", $"Click <a href='{confirmUrl}'>here</a> to confirm your email.");
+                    await _userManager.ConfirmEmailAsync(user.Id, token);
+
                     return RedirectToAction("Login", new { isRegistrationRedirect = true });
                 }
                 else
@@ -161,32 +161,6 @@ namespace AppLunch.Controllers
                 }
             }
             return View(model);
-        }
-        [HttpGet]
-        [AllowAnonymous]
-        public ActionResult ResendEmailConfirmation(string userID)
-        {
-            ViewBag.UserID = userID;
-            return View();
-        }
-
-        [HttpPost]
-        [ActionName("ResendEmailConfirmation")]
-        [ValidateAntiForgeryToken()]
-        [AllowAnonymous]
-        public async Task<ActionResult> ResendEmailConfirmation_Post(string userID)
-        {
-            var user = await _userManager.FindByIdAsync(userID);
-
-            if (user != null)
-            {
-                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                var confirmUrl = Url.Action("ConfirmEmail", "Account", new { userid = user.Id, token = token }, Request.Url.Scheme);
-                await _userManager.SendEmailAsync(user.Id, "Lunch Generator App Email Confirmation", $"Click <a href='{confirmUrl}'>here</a> to confirm your email.");
-                return RedirectToAction("Login", new { isRegistrationRedirect = true });
-            }
-
-            return View();
         }
 
         [HttpGet]
@@ -231,12 +205,22 @@ namespace AppLunch.Controllers
             if (ModelState.IsValid)
             {
                 var user = _userManager.FindByName(model.Inviter);
-                if(user != null)
+                if (user != null)
                 {
                     var member = await _appRepo.GetMemberByIdentityIdAsync(user.Id);
-                    var invite = await _appRepo.InsertInviteAsync(new Invite() { InviteeEmail = model.Invitee,
-                                                                                 Inviter = user.UserName,
-                                                                                 CreateDate = DateTime.Now});
+                    var invite = await _appRepo.InsertInviteAsync(new Invite()
+                    {
+                        InviteeEmail = model.Invitee,
+                        Inviter = user.UserName,
+                        CreateDate = DateTime.Now
+                    });
+
+                    string subject = "Lunch Generator - Registration Invite";
+                    string msg = $"You have been invited by {member.FirstName} {member.LastName} to join the lunch generator community.";
+                    msg += Environment.NewLine;
+                    msg += $"Click <a href='{Url.Action("Register", "Account", new { inviteToken = invite.ID, email = invite.InviteeEmail }, Request.Url.Scheme)}'>here</a> to register your account.";
+                    await _emailService.SendEmail(invite.InviteeEmail, subject, msg);
+                    return RedirectToAction("Index", "Home");
                 }
             }
             return View(model);

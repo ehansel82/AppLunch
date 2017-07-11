@@ -2,7 +2,7 @@
 
 namespace AppLunch.Controllers
 {
-    [Authorize(Roles ="AppLunch_User")]
+    [Authorize(Roles = "AppLunch_User")]
     public class HomeController : Controller
     {
         public ActionResult Index()

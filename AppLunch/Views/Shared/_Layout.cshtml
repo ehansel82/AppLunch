@@ -9,7 +9,7 @@
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     @RenderSection("PageStyles", required: false)
-    <script type = 'text/javascript' >
+    <script type = 'text/javascript'>
         var appInsights=window.appInsights||function(config)
         {
             function r(config){ t[config] = function(){ var i = arguments; t.queue.push(function(){ t[config].apply(t, i)})} }
@@ -17,7 +17,7 @@
         }({
             instrumentationKey:'914f6f59-be6d-42bf-acad-12ed637b0198'
         });
-        
+
         window.appInsights=appInsights;
         appInsights.trackPageView();
     </script>
@@ -49,6 +49,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li>@Html.ActionLink("Manage Locations", "Index", "Location")</li>
+                                    <li>@Html.ActionLink("Invite Users", "Invite", "Account")</li>
                                 </ul>
                             </li>
                         </ul>
