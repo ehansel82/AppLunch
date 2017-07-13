@@ -10,10 +10,22 @@ namespace AppLunch.DataAccess
         [Key, Required]
         public int ID { get; set; }
 
-        [StringLength(50), Required]
+        [StringLength(50), Required, Column(TypeName = "VARCHAR")]
         public string Name { get; set; }
 
-        [Required]
+        [StringLength(50), Column(TypeName = "VARCHAR")]
+        public string Address { get; set; }
+
+        [StringLength(50), Column(TypeName = "VARCHAR")]
+        public string City { get; set; }
+
+        [StringLength(2), Column(TypeName = "VARCHAR")]
+        public string State { get; set; }
+
+        [StringLength(5), Column(TypeName = "VARCHAR")]
+        public string Zip { get; set; }
+
+        [Required, Column(TypeName = "VARCHAR")]
         public string CreateBy { get; set; }
 
         [Required]
