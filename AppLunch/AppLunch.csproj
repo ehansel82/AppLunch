@@ -279,6 +279,10 @@
     <Compile Include="Migrations\201707102310185_NewInviteTable.Designer.cs">
       <DependentUpon>201707102310185_NewInviteTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707130001547_NewLocationColumnsVarcharColumns.cs" />
+    <Compile Include="Migrations\201707130001547_NewLocationColumnsVarcharColumns.Designer.cs">
+      <DependentUpon>201707130001547_NewLocationColumnsVarcharColumns.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\InviteModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -304,8 +308,9 @@
     <Content Include="Views\Account\PasswordResetInit.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Admin\ManageUsers.cshtml" />
-    <Content Include="Views\Location\Index.cshtml" />
     <Content Include="Views\Account\Invite.cshtml" />
+    <Content Include="Views\Location\Index.cshtml" />
+    <Content Include="Views\Location\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -334,6 +339,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707102310185_NewInviteTable.resx">
       <DependentUpon>201707102310185_NewInviteTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707130001547_NewLocationColumnsVarcharColumns.resx">
+      <DependentUpon>201707130001547_NewLocationColumnsVarcharColumns.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

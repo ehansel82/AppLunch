@@ -9,13 +9,13 @@ namespace AppLunch.DataAccess
         [Key, Required]
         public int ID { get; set; }
 
-        [StringLength(50), Required]
+        [StringLength(50), Required, Column(TypeName ="VARCHAR")]
         public string FirstName { get; set; }
 
-        [StringLength(50), Required]
+        [StringLength(50), Required, Column(TypeName = "VARCHAR")]
         public string LastName { get; set; }
 
-        [StringLength(128), Required]
+        [StringLength(128), Required, Column(TypeName = "VARCHAR")]
         public string IdentityID { get; set; }
     }
 }
