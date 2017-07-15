@@ -1,0 +1,52 @@
+﻿@model IEnumerable<AppLunch.DataAccess.Venue>
+
+@{
+    ViewBag.Title = "Venues";
+}
+
+<h2>Venues</h2>
+
+@Html.DropDownList("locationID", 
+                   ViewBag.WorkLocations as IEnumerable<SelectListItem>, 
+                   "Select Work Location", 
+                   new { @class="form-control", onchange="locationChange(this)"} )
+
+@if (ViewBag.LocationID != null) {
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) 
+        </td>
+    </tr>
+}
+</table>
+}
+
+@section PageScripts {
+    <script>
+        function locationChange (selected) {
+            window.location = '/Venues?locationID=' + selected.value;
+        }
+    </script>    
+}

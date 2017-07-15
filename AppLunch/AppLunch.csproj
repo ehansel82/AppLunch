@@ -240,7 +240,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LocationController.cs" />
+    <Compile Include="Controllers\LocationsController.cs" />
+    <Compile Include="Controllers\VenuesController.cs" />
     <Compile Include="DataAccess\AppContext.cs" />
     <Compile Include="DataAccess\AppRepository.cs" />
     <Compile Include="DataAccess\Invite.cs" />
@@ -292,6 +293,14 @@
     <Compile Include="Migrations\201707150032357_Change LocationVenueSchema.Designer.cs">
       <DependentUpon>201707150032357_Change LocationVenueSchema.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707151158098_NewVenueColumns.cs" />
+    <Compile Include="Migrations\201707151158098_NewVenueColumns.Designer.cs">
+      <DependentUpon>201707151158098_NewVenueColumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707151219206_UpdateVenueColumns.cs" />
+    <Compile Include="Migrations\201707151219206_UpdateVenueColumns.Designer.cs">
+      <DependentUpon>201707151219206_UpdateVenueColumns.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\InviteModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -318,8 +327,9 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Admin\ManageUsers.cshtml" />
     <Content Include="Views\Account\Invite.cshtml" />
-    <Content Include="Views\Location\Index.cshtml" />
-    <Content Include="Views\Location\Create.cshtml" />
+    <Content Include="Views\Locations\Index.cshtml" />
+    <Content Include="Views\Locations\Create.cshtml" />
+    <Content Include="Views\Venues\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -357,6 +367,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707150032357_Change LocationVenueSchema.resx">
       <DependentUpon>201707150032357_Change LocationVenueSchema.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707151158098_NewVenueColumns.resx">
+      <DependentUpon>201707151158098_NewVenueColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707151219206_UpdateVenueColumns.resx">
+      <DependentUpon>201707151219206_UpdateVenueColumns.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -18,6 +18,15 @@ namespace AppLunch.DataAccess
             }
         }
 
+        public async Task CreateVenueAsync(Venue venue)
+        {
+            using (var ctx = new AppContext())
+            {
+                ctx.Venues.Add(venue);
+                await ctx.SaveChangesAsync();
+            }
+        }
+
         public async Task DeleteLocationAsync(int id)
         {
             using (var ctx = new AppContext())
@@ -61,6 +70,22 @@ namespace AppLunch.DataAccess
             }
         }
 
+        public async Task<Venue> GetVenueByIdAsync(int id)
+        {
+            using (var ctx = new AppContext())
+            {
+                return await ctx.Venues.Where(x => x.ID == id).SingleAsync();
+            }
+        }
+
+        public async Task<List<Venue>> GetVenuesByLocationIdAsync(int locationID)
+        {
+            using (var ctx = new AppContext())
+            {
+                return await ctx.Venues.Where(x => x.Locations.Any(l => l.ID == locationID)).ToListAsync();
+            }
+        }
+
         public async Task<Invite> InsertInviteAsync(Invite invite)
         {
             using (var ctx = new AppContext())
@@ -82,6 +107,11 @@ namespace AppLunch.DataAccess
         }
 
         public Task UpdateLocationAsync(Location location)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateVenueAsync(Venue venue)
         {
             throw new NotImplementedException();
         }

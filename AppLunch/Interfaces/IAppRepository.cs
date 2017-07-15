@@ -24,5 +24,15 @@ namespace AppLunch.Interfaces
         Task UpdateLocationAsync(Location location);
 
         Task<Location> InsertLocationAsync(Location location);
+
+        Task<List<Venue>> GetVenuesByLocationIdAsync(int locationID);
+
+        Task<Venue> GetVenueByIdAsync(int id);
+
+        Task CreateVenueAsync(Venue venue);
+
+        Task UpdateVenueAsync(Venue venue);
+
+
     }
 }

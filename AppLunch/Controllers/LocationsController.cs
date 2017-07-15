@@ -8,11 +8,11 @@ using System.Web.Mvc;
 namespace AppLunch.Controllers
 {
     [Authorize(Roles = "AppLunch_Admin")]
-    public class LocationController : Controller
+    public class LocationsController : Controller
     {
         private IAppRepository _appRepo;
 
-        public LocationController(IAppRepository appRepo)
+        public LocationsController(IAppRepository appRepo)
         {
             _appRepo = appRepo;
         }
