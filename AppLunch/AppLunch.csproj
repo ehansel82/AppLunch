@@ -246,6 +246,7 @@
     <Compile Include="DataAccess\Invite.cs" />
     <Compile Include="DataAccess\Member.cs" />
     <Compile Include="DataAccess\Location.cs" />
+    <Compile Include="DataAccess\Venue.cs" />
     <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
     <Compile Include="FilterConfig.cs" />
     <Compile Include="Filters\ViewBagGlobalAttribute.cs" />
@@ -282,6 +283,14 @@
     <Compile Include="Migrations\201707130001547_NewLocationColumnsVarcharColumns.cs" />
     <Compile Include="Migrations\201707130001547_NewLocationColumnsVarcharColumns.Designer.cs">
       <DependentUpon>201707130001547_NewLocationColumnsVarcharColumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707150025318_VenueTableWithLinker.cs" />
+    <Compile Include="Migrations\201707150025318_VenueTableWithLinker.Designer.cs">
+      <DependentUpon>201707150025318_VenueTableWithLinker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707150032357_Change LocationVenueSchema.cs" />
+    <Compile Include="Migrations\201707150032357_Change LocationVenueSchema.Designer.cs">
+      <DependentUpon>201707150032357_Change LocationVenueSchema.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\InviteModel.cs" />
@@ -342,6 +351,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707130001547_NewLocationColumnsVarcharColumns.resx">
       <DependentUpon>201707130001547_NewLocationColumnsVarcharColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707150025318_VenueTableWithLinker.resx">
+      <DependentUpon>201707150025318_VenueTableWithLinker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707150032357_Change LocationVenueSchema.resx">
+      <DependentUpon>201707150032357_Change LocationVenueSchema.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

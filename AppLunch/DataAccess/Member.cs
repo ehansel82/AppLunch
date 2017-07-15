@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppLunch.DataAccess
@@ -6,7 +7,8 @@ namespace AppLunch.DataAccess
     [Table("Member", Schema = "AppLunch")]
     public class Member
     {
-        [Key, Required]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         [StringLength(50), Required, Column(TypeName ="VARCHAR")]

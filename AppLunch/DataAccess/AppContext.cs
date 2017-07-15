@@ -16,9 +16,22 @@ namespace AppLunch.DataAccess
 
         public DbSet<Invite> Invites { get; set; }
 
+        public DbSet<Venue> Venues { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Location>()
+            .HasMany<Venue>(s => s.Venues)
+            .WithMany(c => c.Locations)
+            .Map(cs =>
+            {
+                cs.MapLeftKey("LocationRefId");
+                cs.MapRightKey("VenueRefId");
+                cs.ToTable("LocationVenue", "AppLunch");
+            });
+
         }
     }
 }
