@@ -13,7 +13,7 @@
 
 @if (ViewBag.LocationID != null) {
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { locationID = ViewBag.LocationID })
 </p>
 <table class="table">
     <tr>

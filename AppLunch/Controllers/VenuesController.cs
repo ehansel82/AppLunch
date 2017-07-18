@@ -4,12 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace AppLunch.Controllers
 {
-    [Authorize(Roles ="AppLunch_Manager")]
+    [Authorize(Roles = "AppLunch_Manager")]
     public class VenuesController : Controller
     {
         private IAppRepository _repo;
@@ -34,7 +33,7 @@ namespace AppLunch.Controllers
             }
             else
             {
-                venues = await _repo.GetVenuesByLocationIdAsync((int) locationID);
+                venues = await _repo.GetVenuesByLocationIdAsync((int)locationID);
             }
             return View(venues);
         }
@@ -46,25 +45,32 @@ namespace AppLunch.Controllers
         }
 
         // GET: Venues/Create
-        public ActionResult Create()
+        public ActionResult Create(int? locationID)
         {
+            if (locationID == null)
+            {
+                return new HttpStatusCodeResult(400);
+            }
+
+            ViewBag.LocationID = locationID;
             return View();
         }
 
         // POST: Venues/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create(Venue model, int locationID)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            model.CreateBy = HttpContext.User.Identity.Name;
+            ModelState["CreateBy"].Errors.Clear();
+            model.CreateDate = DateTime.Now;
 
+            if (ModelState.IsValid)
+            {
+                await _repo.CreateVenueAsync(model, locationID);
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(model);
         }
 
         // GET: Venues/Edit/5

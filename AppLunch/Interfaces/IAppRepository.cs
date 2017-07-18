@@ -29,7 +29,7 @@ namespace AppLunch.Interfaces
 
         Task<Venue> GetVenueByIdAsync(int id);
 
-        Task CreateVenueAsync(Venue venue);
+        Task CreateVenueAsync(Venue venue, int locationID);
 
         Task UpdateVenueAsync(Venue venue);
 

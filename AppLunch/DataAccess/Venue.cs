@@ -10,6 +10,11 @@ namespace AppLunch.DataAccess
     [Table("Venue", Schema = "AppLunch")]
     public class Venue
     {
+        public Venue()
+        {
+            Locations = new List<Location>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
@@ -23,7 +28,7 @@ namespace AppLunch.DataAccess
         [StringLength(50), Column(TypeName = "VARCHAR")]
         public string Address { get; set; }
 
-        [StringLength(50), Column(TypeName = "VARCHAR")]
+        [StringLength(50), Required, Column(TypeName = "VARCHAR")]
         public string City { get; set; }
 
         [StringLength(2), Column(TypeName = "VARCHAR")]
@@ -39,7 +44,7 @@ namespace AppLunch.DataAccess
         public DateTime CreateDate { get; set; }
 
         [Column(TypeName = "VARCHAR")]
-        public string UpadateBy { get; set; }
+        public string UpdateBy { get; set; }
 
         public DateTime? UpdateDate { get; set; }
 

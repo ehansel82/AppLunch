@@ -330,6 +330,7 @@
     <Content Include="Views\Locations\Index.cshtml" />
     <Content Include="Views\Locations\Create.cshtml" />
     <Content Include="Views\Venues\Index.cshtml" />
+    <Content Include="Views\Venues\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

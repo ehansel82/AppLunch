@@ -18,10 +18,11 @@ namespace AppLunch.DataAccess
             }
         }
 
-        public async Task CreateVenueAsync(Venue venue)
+        public async Task CreateVenueAsync(Venue venue, int locationID)
         {
             using (var ctx = new AppContext())
             {
+                venue.Locations.Add(ctx.Locations.Where(x => x.ID == locationID).Single());
                 ctx.Venues.Add(venue);
                 await ctx.SaveChangesAsync();
             }
