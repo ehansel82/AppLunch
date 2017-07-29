@@ -7,11 +7,16 @@ namespace AppLunch.DataAccess
     [Table("Member", Schema = "AppLunch")]
     public class Member
     {
+        public Member()
+        {
+            Rankings = new List<Ranking>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
-        [StringLength(50), Required, Column(TypeName ="VARCHAR")]
+        [StringLength(50), Required, Column(TypeName = "VARCHAR")]
         public string FirstName { get; set; }
 
         [StringLength(50), Required, Column(TypeName = "VARCHAR")]
@@ -19,5 +24,7 @@ namespace AppLunch.DataAccess
 
         [StringLength(128), Required, Column(TypeName = "VARCHAR")]
         public string IdentityID { get; set; }
+
+        public ICollection<Ranking> Rankings { get; set; }
     }
 }

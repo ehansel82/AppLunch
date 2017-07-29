@@ -13,6 +13,7 @@ namespace AppLunch.DataAccess
         public Venue()
         {
             Locations = new List<Location>();
+            Rankings = new List<Ranking>();
         }
 
         [Key]
@@ -49,5 +50,7 @@ namespace AppLunch.DataAccess
         public DateTime? UpdateDate { get; set; }
 
         public ICollection<Location> Locations { get; set; }
+
+        public ICollection<Ranking> Rankings { get; set; }
     }
 }

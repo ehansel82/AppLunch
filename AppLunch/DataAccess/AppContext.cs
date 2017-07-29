@@ -32,6 +32,14 @@ namespace AppLunch.DataAccess
                 cs.ToTable("LocationVenue", "AppLunch");
             });
 
+            modelBuilder.Entity<Ranking>()
+                .HasRequired<Member>(x => x.Member)
+                .WithMany(x => x.Rankings);
+
+            modelBuilder.Entity<Ranking>()
+                .HasRequired<Venue>(x => x.Venue)
+                .WithMany(x => x.Rankings);
+
         }
     }
 }

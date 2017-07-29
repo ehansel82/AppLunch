@@ -247,6 +247,7 @@
     <Compile Include="DataAccess\Invite.cs" />
     <Compile Include="DataAccess\Member.cs" />
     <Compile Include="DataAccess\Location.cs" />
+    <Compile Include="DataAccess\Ranking.cs" />
     <Compile Include="DataAccess\Venue.cs" />
     <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
     <Compile Include="FilterConfig.cs" />
@@ -300,6 +301,14 @@
     <Compile Include="Migrations\201707151219206_UpdateVenueColumns.cs" />
     <Compile Include="Migrations\201707151219206_UpdateVenueColumns.Designer.cs">
       <DependentUpon>201707151219206_UpdateVenueColumns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707291242417_UpdateByVenue.cs" />
+    <Compile Include="Migrations\201707291242417_UpdateByVenue.Designer.cs">
+      <DependentUpon>201707291242417_UpdateByVenue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707291256427_Rankings.cs" />
+    <Compile Include="Migrations\201707291256427_Rankings.Designer.cs">
+      <DependentUpon>201707291256427_Rankings.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\InviteModel.cs" />
@@ -374,6 +383,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707151219206_UpdateVenueColumns.resx">
       <DependentUpon>201707151219206_UpdateVenueColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707291242417_UpdateByVenue.resx">
+      <DependentUpon>201707291242417_UpdateByVenue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707291256427_Rankings.resx">
+      <DependentUpon>201707291256427_Rankings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
