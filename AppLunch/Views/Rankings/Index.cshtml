@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Rankings";
+}
+
+<h2>My Rankings</h2>
+<p>Rank the restaurants around your work location.</p>
+
+<div>
+    @Html.DropDownList("locationID",
+                   ViewBag.WorkLocations as IEnumerable<SelectListItem>,
+                   "Select Work Location",
+                   new { @class = "form-control", onchange = "locationChange(this)" })
+</div>
+
+
+@section PageScripts {
+    <script>
+        function locationChange (selected) {
+            window.location = '/Venues?locationID=' + selected.value;
+        }
+    </script>
+}

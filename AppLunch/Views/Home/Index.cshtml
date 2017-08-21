@@ -3,3 +3,15 @@
 }
 
 <h2>Lunch Club</h2>
+
+
+<button id="rankingsBtn" class="btn btn-primary">My Rankings</button>
+
+
+@section PageScripts {
+<script>
+    $('#rankingsBtn').click(function () {
+        window.location.href = '@Url.Action("Index", "Rankings")';
+    });
+</script>
+}

@@ -21,10 +21,7 @@ namespace AppLunch.Controllers
         // GET: Venues
         public async Task<ActionResult> Index(int? locationID)
         {
-            ViewBag.LocationID = locationID;
-            ViewBag.WorkLocations = new List<SelectListItem>() { new SelectListItem() { Text = "--select--", Value = "-1" } };
-            var dbLocations = (await _repo.GetLocationsAsync()).Select(x => new SelectListItem() { Text = x.Name, Value = x.ID.ToString() }).ToList();
-            ViewBag.WorkLocations = (ViewBag.WorkLocations as List<SelectListItem>).Concat(dbLocations);
+            ViewBag.WorkLocations = (await _repo.GetLocationsAsync()).Select(x => new SelectListItem() { Text = x.Name, Value = x.ID.ToString() }).ToList();
 
             var venues = new List<Venue>();
             if (locationID < 0 || locationID == null)
