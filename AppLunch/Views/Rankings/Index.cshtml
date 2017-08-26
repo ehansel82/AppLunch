@@ -9,14 +9,38 @@
     @Html.DropDownList("locationID",
                    ViewBag.WorkLocations as IEnumerable<SelectListItem>,
                    "Select Work Location",
-                   new { @class = "form-control", onchange = "locationChange(this)" })
+                   new { @class = "form-control" })
 </div>
+
+<ul data-bind="foreach: venues">
+    <li data-bind="text: Name"></li>
+</ul>
 
 
 @section PageScripts {
     <script>
-        function locationChange (selected) {
-            window.location = '/Venues?locationID=' + selected.value;
-        }
+        (function () {
+
+            function VenuesViewModel() {
+                var self = this;
+
+                self.venues = ko.observableArray([]);
+
+                $('#locationID').on('change', function () {
+                    var url = '@Url.Action("GetByWorkLocation", "Venues")';
+                    url += "?locationID=" + $(this).val();
+                    $.getJSON(url, function (data) {
+                        self.venues.removeAll();
+                        for (var i = 0; i < data.length; i++) {
+                            self.venues.push(data[i]);
+                        }
+                    });
+                });
+            }
+
+            ko.applyBindings(new VenuesViewModel());
+
+        })();
+
     </script>
 }

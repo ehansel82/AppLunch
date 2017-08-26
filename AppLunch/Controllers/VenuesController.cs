@@ -41,6 +41,13 @@ namespace AppLunch.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<ActionResult> GetByWorkLocation(int locationID)
+        {
+            List<Venue> venues = await _repo.GetVenuesByLocationIdAsync(locationID);
+            return new JsonResult() { Data = venues, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
         // GET: Venues/Create
         public ActionResult Create(int? locationID)
         {
