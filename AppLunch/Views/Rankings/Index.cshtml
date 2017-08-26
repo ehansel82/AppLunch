@@ -12,9 +12,25 @@
                    new { @class = "form-control" })
 </div>
 
-<ul data-bind="foreach: venues">
-    <li data-bind="text: Name"></li>
-</ul>
+<div data-bind="foreach: venues">
+    <div>
+    <span data-bind="text: Name"></span>
+        <span class="starRating">
+            <input data-bind="attr: { id: 'rating5-' + ID, name: 'rating-' + ID }" type="radio" value="5">
+            <label data-bind="attr: { for: 'rating5-' + ID }">5</label>
+            <input data-bind="attr: { id: 'rating4-' + ID, name: 'rating-' + ID }" type="radio" value="4">
+            <label data-bind="attr: { for: 'rating4-' + ID }">4</label>
+            <input data-bind="attr: { id: 'rating3-' + ID, name: 'rating-' + ID }" type="radio" value="3">
+            <label data-bind="attr: { for: 'rating3-' + ID }">3</label>
+            <input data-bind="attr: { id: 'rating2-' + ID, name: 'rating-' + ID }" type="radio" value="2">
+            <label data-bind="attr: { for: 'rating2-' + ID }">2</label>
+            <input data-bind="attr: { id: 'rating1-' + ID, name: 'rating-' + ID }" type="radio" value="1">
+            <label data-bind="attr: { for: 'rating1-' + ID }">1</label>
+
+     
+        </span>
+    </div>
+</div>
 
 
 @section PageScripts {
