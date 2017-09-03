@@ -18,6 +18,8 @@ namespace AppLunch.DataAccess
 
         public DbSet<Venue> Venues { get; set; }
 
+        public DbSet<Ranking> Rankings { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

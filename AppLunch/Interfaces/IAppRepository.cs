@@ -33,6 +33,6 @@ namespace AppLunch.Interfaces
 
         Task UpdateVenueAsync(Venue venue);
 
-
+        Task InsertOrUpdateRankingAsync(int venueID, int stars, string memberID);
     }
 }

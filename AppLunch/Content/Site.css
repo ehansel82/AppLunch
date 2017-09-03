@@ -59,3 +59,7 @@ h1, h2 {
 .starRating:not(:hover) > :checked ~ label:before {
     opacity: 1;
 }
+
+.starRating input {
+    cursor: pointer;
+}

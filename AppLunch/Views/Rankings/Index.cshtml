@@ -14,24 +14,21 @@
 
 <div data-bind="foreach: venues">
     <div>
-    <span data-bind="text: Name"></span>
+        <span data-bind="text: Name"></span>
         <span class="starRating">
-            <input data-bind="attr: { id: 'rating5-' + ID, name: 'rating-' + ID }" type="radio" value="5">
+            <input data-bind="attr: { id: 'rating5-' + ID, name: 'rating-' + ID }, click: $parent.transmitRanking5" type="radio" value="5">
             <label data-bind="attr: { for: 'rating5-' + ID }">5</label>
-            <input data-bind="attr: { id: 'rating4-' + ID, name: 'rating-' + ID }" type="radio" value="4">
+            <input data-bind="attr: { id: 'rating4-' + ID, name: 'rating-' + ID }, click: $parent.transmitRanking4" type="radio" value="4">
             <label data-bind="attr: { for: 'rating4-' + ID }">4</label>
-            <input data-bind="attr: { id: 'rating3-' + ID, name: 'rating-' + ID }" type="radio" value="3">
+            <input data-bind="attr: { id: 'rating3-' + ID, name: 'rating-' + ID }, click: $parent.transmitRanking3" type="radio" value="3">
             <label data-bind="attr: { for: 'rating3-' + ID }">3</label>
-            <input data-bind="attr: { id: 'rating2-' + ID, name: 'rating-' + ID }" type="radio" value="2">
+            <input data-bind="attr: { id: 'rating2-' + ID, name: 'rating-' + ID }, click: $parent.transmitRanking2" type="radio" value="2">
             <label data-bind="attr: { for: 'rating2-' + ID }">2</label>
-            <input data-bind="attr: { id: 'rating1-' + ID, name: 'rating-' + ID }" type="radio" value="1">
+            <input data-bind="attr: { id: 'rating1-' + ID, name: 'rating-' + ID }, click: $parent.transmitRanking1" type="radio" value="1">
             <label data-bind="attr: { for: 'rating1-' + ID }">1</label>
-
-     
         </span>
     </div>
 </div>
-
 
 @section PageScripts {
     <script>
@@ -41,6 +38,45 @@
                 var self = this;
 
                 self.venues = ko.observableArray([]);
+
+                self.transmitRanking1 = function (venue) {
+                    self.transmitRanking(1, venue);
+                    return true;
+                };
+                self.transmitRanking2 = function (venue) {
+                    self.transmitRanking(2, venue);
+                    return true;
+                };
+                self.transmitRanking3 = function (venue) {
+                    self.transmitRanking(3, venue);
+                    return true;
+                };
+                self.transmitRanking4 = function (venue) {
+                    self.transmitRanking(4, venue);
+                    return true;
+                };
+                self.transmitRanking5 = function (venue) {
+                    self.transmitRanking(5, venue);
+                    return true;
+                };
+
+                self.transmitRanking = function (value, venue) {
+                    var url = '@Url.Action("Submit", "Rankings")';
+                    var data = { venueID: venue.ID, ranking: value };
+
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: ko.toJSON(data),
+                        contentType: "application/json",
+                        dataType: "json",
+                        success: function (result) {
+                        },
+                        error: function (result) {
+                            alert(result.responseText);
+                        }
+                    });
+                };
 
                 $('#locationID').on('change', function () {
                     var url = '@Url.Action("GetByWorkLocation", "Venues")';
@@ -57,6 +93,5 @@
             ko.applyBindings(new VenuesViewModel());
 
         })();
-
     </script>
 }

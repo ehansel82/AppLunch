@@ -107,6 +107,30 @@ namespace AppLunch.DataAccess
             }
         }
 
+        public async Task InsertOrUpdateRankingAsync(int venueID, int stars, string identityID)
+        {
+            using (var ctx = new AppContext())
+            {
+                var existingRanking = await ctx.Rankings.Where(x => x.Member.IdentityID == identityID && x.Venue.ID == venueID).SingleOrDefaultAsync();
+                if (existingRanking == null)
+                {
+                    var memberID = await ctx.Members.Where(x => x.IdentityID == identityID).Select(x => x.ID).SingleAsync();
+                    var ranking = new Ranking()
+                    {
+                        Stars = stars,
+                        Venue = await ctx.Venues.Where(x => x.ID == venueID).SingleAsync(),
+                        Member = await ctx.Members.Where(x => x.ID == memberID).SingleAsync()
+                    };
+                    ctx.Rankings.Add(ranking);
+                }
+                else
+                {
+                    existingRanking.Stars = stars;
+                }
+                await ctx.SaveChangesAsync();
+            }
+        }
+
         public Task UpdateLocationAsync(Location location)
         {
             throw new NotImplementedException();
